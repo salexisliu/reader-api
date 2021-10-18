@@ -21,9 +21,9 @@ class BooksController < ApplicationController
       render json: @book.to_json(
         include: {
           lines: { 
-            except: [
-              :created_at
-            ]
+            include: {
+              notes: {}
+             }
          }}
       )
 

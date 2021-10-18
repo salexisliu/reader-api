@@ -1,7 +1,7 @@
 class NotesController < ApplicationController
 
   # get rid of this skip before action later
-  skip_before_action :authorized
+  # skip_before_action :authorized
   before_action :find_note, only:  [:show, :update]
   # before_action :authorize_user, only: [:show, :update]
 
@@ -30,13 +30,21 @@ class NotesController < ApplicationController
   end
 
   def create
-    note = Note.new(Note_params)
+    note = Note.new(note_params)
     if note.save
       render json: note, status: :created
     else
       render json: note.errors, status: :unprocessable_entity
     end
   end
+
+  def destroy
+    note = Note.find(params[:id])
+    note.destroy
+    render json: note, status: :ok
+  end
+
+
 
 private
 
