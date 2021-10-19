@@ -2,6 +2,8 @@ class Api::V1::AuthController < ApplicationController
   # //handles login
   skip_before_action :authorized
 
+  # starting auth
+
   def create
     @user = User.find_by(username: user_login_params[:username])
     #User#authenticate comes from BCrypt
