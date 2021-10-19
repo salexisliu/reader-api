@@ -1,6 +1,8 @@
 class Book < ApplicationRecord
 
-  has_many :lines
+  has_many :lines, dependent: :destroy
+  accepts_nested_attributes_for :lines
+
   belongs_to :user
 
   validates :title, :author, :user_id, presence: true

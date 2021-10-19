@@ -22,7 +22,7 @@ class LinesController < ApplicationController
   end
 
  def update
-    if @line.update(line_params)
+    if @line.update(line_update_params)
       render json: @line, status: :ok
     else
       render json: @line.errors, status: :unprocessable_entity
@@ -51,6 +51,10 @@ private
 
 
   def line_params
+    params.permit(:highlighted, :book_id, :content, :id, :position)
+  end
+
+  def line_update_params
     params.permit(:highlighted, :book_id, :content, :id)
   end
 end
