@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 resources :books
 resources :lines
+get '/linebybook/:id', to: 'lines#booklines'
 resources :notes
 
   namespace :api do

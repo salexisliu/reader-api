@@ -32,7 +32,8 @@ class NotesController < ApplicationController
   def create
     note = Note.new(note_params)
     if note.save
-      render json: note, status: :created
+         @line = Line.where(id: note.line_id)
+      render json: @line, status: :created
     else
       render json: note.errors, status: :unprocessable_entity
     end
@@ -40,10 +41,12 @@ class NotesController < ApplicationController
 
   def destroy
     note = Note.find(params[:id])
-    note.destroy
-    render json: note, status: :ok
-  end
+    if note.destroy
+        @line = Line.where(id: note.line_id)
 
+    render json: @line, status: :ok
+  end
+end
 
 
 private

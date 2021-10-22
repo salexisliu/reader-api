@@ -6,7 +6,7 @@ class BooksController < ApplicationController
   # before_action :authorize_user, only: [:show, :update]
 
   def index
-    books = Book.all
+    books = current_user.books.all
     render json: books.to_json(
         include: {
           lines: { 
@@ -30,7 +30,7 @@ class BooksController < ApplicationController
   end
 
   def create
-    book = Book.new(create_book_params)
+    book = current_user.books.new(create_book_params)
       if book.save
         render json: book, status: :created
       else
@@ -69,12 +69,12 @@ private
     @book = Book.find(params[:id])
   end
 
-  # def authorize_user
-  #   #user is authorized IF they are the admin OR the creator of the event
-  #   user_can_modify = @book.user_id == current_user.id
-  #   render json: {error: "You don't have permission to perform that action"}, 
-  #   status: :forbidden unless user_can_modify 
-  #   #is the current use an admin?
-  # end
+  def authorize_user
+    #user is authorized IF they are the admin OR the creator of the event
+    user_can_modify = @book.user_id == current_user.id
+    render json: {error: "You don't have permission to perform that action"}, 
+    status: :forbidden unless user_can_modify 
+    #is the current use an admin?
+  end
 
 end

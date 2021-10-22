@@ -1,13 +1,23 @@
 class LinesController < ApplicationController
   before_action :find_line, only:  [:show, :update]
+  skip_before_action :authorized
 
   def index
     lines = Line.all
     render json: lines
+    
     # .to_json(
        
     #   ), status: :ok
   end
+
+  def booklines
+    @lines = Line.where(book_id: params[:id]).reorder("id").paginate(:page => params[:page], :per_page=>5)
+    render json: @lines
+    
+  end
+
+
 
   def show
       render json: @line.to_json(
@@ -57,4 +67,6 @@ private
   def line_update_params
     params.permit(:highlighted, :book_id, :content, :id)
   end
+
+  
 end
