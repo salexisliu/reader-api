@@ -1,7 +1,8 @@
 class BooksController < ApplicationController
 
-  # get rid of this skip before action later
- 
+  # get rid of this skip before action later CURRENTLY MAKING FLASHCARDS
+   skip_before_action :authorized
+
   before_action :find_book, only:  [:show, :update]
   # before_action :authorize_user, only: [:show, :update]
 
