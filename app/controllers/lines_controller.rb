@@ -14,7 +14,6 @@ class LinesController < ApplicationController
   def booklines
     @lines = Line.where(book_id: params[:id]).reorder("id").paginate(:page => params[:page], :per_page=>5)
     render json: @lines
-    
   end
 
 

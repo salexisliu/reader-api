@@ -38,6 +38,15 @@ class BooksController < ApplicationController
         render json: book.errors, status: :unprocessable_entity
       end
   end
+
+  def update
+   if @book.update(update_book_params)
+    render json: @book, status: :ok
+   else 
+    render json: @book.errors, status: :unprocessable_entity
+    end
+
+  end
    
   def destroy
     book = Book.find(params[:id])
@@ -51,6 +60,9 @@ private
     params.permit(:title, :summary, :author, :user_id, :finished)
   end
 
+   def update_book_params
+    params.permit(:title, :author, :user_id)
+  end
   def create_book_params
     params
       .require(:book)
