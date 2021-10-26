@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 resources :books
+get '/getbookbg', to: 'books#getbookbg'
 resources :lines
 resources :flashcards
 get '/linebybook/:id', to: 'lines#booklines'

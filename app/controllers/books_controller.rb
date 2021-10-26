@@ -6,6 +6,18 @@ class BooksController < ApplicationController
   before_action :find_book, only:  [:show, :update]
   # before_action :authorize_user, only: [:show, :update]
 
+    def getbookbg
+    books = Book.all
+    render json: books.to_json(
+         include: {
+          lines: { 
+            except: [
+              :created_at
+            ]
+         }}
+      ), status: :ok
+  end
+
   def index
     books = current_user.books.all
     render json: books.to_json(
