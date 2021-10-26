@@ -5,8 +5,8 @@ class FlashcardsController < ApplicationController
   skip_before_action :authorized
 
   def index
-    flashcards = Flashcard.all
-    render json: flashcards.to_json(
+    @flashcards = current_user.flashcards.all
+    render json: @flashcards.to_json(
        include: {
           book: { 
             except: [
@@ -21,7 +21,7 @@ class FlashcardsController < ApplicationController
   end
 
   def create
-    flashcard = Flashcard.new(card_params)
+    flashcard = current_user.flashcards.new(create_card_params)
     if flashcard.save
       render json: flashcard, status: :created
     else
@@ -46,4 +46,8 @@ class FlashcardsController < ApplicationController
     @card = Flashcard.find(params[:id])
   end
 
+  def create_card_params
+    params
+      .permit(:book_id, :term, :definition, :learned, :user_id) 
+  end
 end
