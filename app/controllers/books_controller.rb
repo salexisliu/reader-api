@@ -3,7 +3,7 @@ class BooksController < ApplicationController
   # get rid of this skip before action later CURRENTLY MAKING FLASHCARDS
    skip_before_action :authorized
 
-  before_action :find_book, only:  [:show, :update]
+  before_action :find_book, only:  [:update]
   # before_action :authorize_user, only: [:show, :update]
 
     def getbookbg
@@ -31,6 +31,7 @@ class BooksController < ApplicationController
   end
 
   def show
+    @book = current_user.books.find(params[:id])
       render json: @book.to_json(
         include: {
           lines: { 
