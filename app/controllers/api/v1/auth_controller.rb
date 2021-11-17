@@ -1,6 +1,7 @@
 class Api::V1::AuthController < ApplicationController
   # //handles login
-  skip_before_action :authorized, only: [:create]
+  skip_before_action :authorized, only: [:create, :autologin]
+
 
   def create
     @user = User.find_by(username: user_login_params[:username])
@@ -14,7 +15,17 @@ class Api::V1::AuthController < ApplicationController
     end
   end
 
+
+def autologin
+    @token = params[:token]
+    # byebug
+    user = User.find(JWT.decode(@token, 'my_s3cr3t', true, algorithm: 'HS256')[0]["user_id"])
+    render json: user
+  end
+
   private
+
+  
 
   def user_login_params
     # params { user: {username: 'Chandler Bing', password: 'hi' } }

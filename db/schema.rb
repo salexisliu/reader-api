@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_17_012839) do
+ActiveRecord::Schema.define(version: 2021_10_26_180832) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,12 +26,24 @@ ActiveRecord::Schema.define(version: 2021_10_17_012839) do
     t.index ["user_id"], name: "index_books_on_user_id"
   end
 
+  create_table "flashcards", force: :cascade do |t|
+    t.bigint "book_id", null: false
+    t.string "term"
+    t.string "definition"
+    t.boolean "learned"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "user_id"
+    t.index ["book_id"], name: "index_flashcards_on_book_id"
+  end
+
   create_table "lines", force: :cascade do |t|
     t.bigint "book_id", null: false
     t.text "content"
     t.boolean "highlighted"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "position"
     t.index ["book_id"], name: "index_lines_on_book_id"
   end
 
@@ -54,6 +66,7 @@ ActiveRecord::Schema.define(version: 2021_10_17_012839) do
   end
 
   add_foreign_key "books", "users"
+  add_foreign_key "flashcards", "books"
   add_foreign_key "lines", "books"
   add_foreign_key "notes", "lines"
 end
