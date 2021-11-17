@@ -1,9 +1,7 @@
 class NotesController < ApplicationController
 
-  # get rid of this skip before action later
-  # skip_before_action :authorized
   before_action :find_note, only:  [:show, :update]
-  # before_action :authorize_user, only: [:show, :update]
+
 
   def index
     notes = Note.all

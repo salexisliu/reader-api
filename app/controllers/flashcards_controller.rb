@@ -1,8 +1,6 @@
 class FlashcardsController < ApplicationController
 
-   before_action :find_card, only: [:show]
-     # get rid of this skip before action later CURRENTLY MAKING FLASHCARDS
-  skip_before_action :authorized
+  before_action :find_card, only: [:show]
 
   def index
     @flashcards = current_user.flashcards.all

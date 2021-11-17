@@ -16,7 +16,7 @@ class Api::V1::AuthController < ApplicationController
   end
 
 
-def autologin
+  def autologin
     @token = params[:token]
     # byebug
     user = User.find(JWT.decode(@token, 'my_s3cr3t', true, algorithm: 'HS256')[0]["user_id"])
@@ -24,8 +24,6 @@ def autologin
   end
 
   private
-
-  
 
   def user_login_params
     # params { user: {username: 'Chandler Bing', password: 'hi' } }
