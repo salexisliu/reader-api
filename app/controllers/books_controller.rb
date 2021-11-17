@@ -1,7 +1,7 @@
 class BooksController < ApplicationController
 
   before_action :find_book, only:  [:update]
-  # before_action :authorize_user, only: [:show, :update]
+  skip_before_action :authorized
 
     def getbookbg
     books = Book.all

@@ -2,6 +2,7 @@ class FlashcardsController < ApplicationController
 
   before_action :find_card, only: [:show]
 
+
   def index
     @flashcards = current_user.flashcards.all
     render json: @flashcards.to_json(
