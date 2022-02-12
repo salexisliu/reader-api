@@ -1,6 +1,6 @@
 class LinesController < ApplicationController
   before_action :find_line, only:  [:show, :update]
-  skip_before_action :authorized
+
 
   def index
     lines = Line.all
@@ -12,10 +12,10 @@ class LinesController < ApplicationController
   end
 
   def booklines
-    @lines = Line.where(book_id: params[:id]).reorder("id").paginate(:page => params[:page], :per_page=>5)
+    @book = current_user.books.find(params[:id])
+    @lines = @book.lines.reorder("id").paginate(:page => params[:page], :per_page=>5)
     render json: @lines
   end
-
 
 
   def show
